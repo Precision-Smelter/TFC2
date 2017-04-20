@@ -71,7 +71,7 @@ public class ContainerSpecialCrafting extends ContainerTFC
 	{
 		RecipeType rt = RecipeType.KNAPPING;
 		PlayerInfo pi = PlayerManagerTFC.getInstance().getPlayerInfoFromPlayer(invPlayer.player);
-		if(pi.specialCraftingType.getItem() == Items.CLAY_BALL)
+		if(pi.specialCraftingType != null && pi.specialCraftingType.getItem() == Items.CLAY_BALL)
 			rt = RecipeType.POTTERY;
 
 		ItemStack result = CraftingManagerTFC.getInstance().findMatchingRecipe(rt, this.craftMatrix, worldObj);
@@ -101,7 +101,12 @@ public class ContainerSpecialCrafting extends ContainerTFC
 				setDecreasedStack(true); // Mark container so it won't decrease again.
 				if (!this.worldObj.isRemote) // Server only to prevent it removing multiple times.
 				{
-					invPlayer.decrStackSize(invPlayer.currentItem, 1);
+					int count = 1;
+
+					if(invPlayer.getStackInSlot(invPlayer.currentItem).getItem() == Items.CLAY_BALL)
+						count = 5;
+
+					invPlayer.decrStackSize(invPlayer.currentItem, count);
 				}
 			}
 		}

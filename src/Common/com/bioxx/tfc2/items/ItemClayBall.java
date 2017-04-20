@@ -1,5 +1,7 @@
 package com.bioxx.tfc2.items;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -18,7 +20,7 @@ public class ItemClayBall extends ItemTerra
 	{
 		ItemStack itemStackIn = playerIn.getHeldItem(handIn);
 
-		if(itemStackIn.getCount() < 2)
+		if(itemStackIn.getCount() < 5)
 		{
 			return new ActionResult(EnumActionResult.FAIL, itemStackIn);
 		}
@@ -28,6 +30,13 @@ public class ItemClayBall extends ItemTerra
 		pi.specialCraftingTypeAlternate = new ItemStack(itemStackIn.getItem());
 		if(!worldIn.isRemote)
 			playerIn.openGui(TFC.instance, 0, worldIn, playerIn.getPosition().getX(), playerIn.getPosition().getY(), playerIn.getPosition().getZ());
+
 		return new ActionResult(EnumActionResult.PASS, itemStackIn);
+	}
+
+	@Override
+	public void addInformation(ItemStack is, EntityPlayer player, List arraylist, boolean flag)
+	{
+		super.addInformation(is, player, arraylist, flag);
 	}
 }
